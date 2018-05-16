@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating elements in the DOM with javaScript</title>
+</head>
+<body>
+   
+   <ul style="font-size: 1.5em">
+       <li>Create an element with js</li>
+       <li>Add text and some style to the element with js</li>
+       <li>Add the element to the DOM with js</li>
+       <li>Create a function that uses an argument/s that dynamically creates an element</li>
+       <li>Comment & indent your code </li>
+       <li>Push your code to the repo under the title of create-element-js</li>
+   </ul>
+   <h4>Hello</h4>
+    
+    <script>
+        
+        var myHeading = document.querySelector('h4');
+//        var myDiv = document.createElement('div');
+        
+//        myDiv.style.height = '200px';
+//        myDiv.style.width = '200px';
+//        myDiv.style.backgroundColor = 'pink';
+//        myDiv.innerText = 'This is a square';
+//        
+//        console.log(myHeading);
+//        myHeading.after(myDiv);
+        
+        // Here we have a dynamic function that:
+        // Creates an element, using the elemented inputted into the argument
+        // Adds a first style attribute, using the preperty and value inputted into the argument
+        // Adds a second style attribute, using the preperty and value inputted into the argument
+        // Adds inner HTML
+        function createEl(elName, property1, value1, property2, value2){
+            var myElement = document.createElement(elName); // Creating the element specified in the argument and storing it as a variable
+            myElement.style[property1] = value1; // Adding first style to the element
+            myElement.style[property2] = value2; // Adding first style to the element
+            myElement.innerHTML = 'Hello World!'; // Adding inner HTML
+            myHeading.after(myElement); // Adding the element to the DOM after the h4 heading
+            console.log(myElement);
+        };
+        
+        // Creating a p element and giving it color and font size styling
+        createEl('p', 'color', 'blue', 'fontSize', '3em');
+        createEl('div', 'backgroundColor', 'blue', 'color', 'white');
+        
+        
+//        var gimmeH4 = document.querySelector('h4');
+//
+//			// Create the new element
+//			// This can be any valid HTML element: p, article, span, etc...
+//			var p = document.createElement('p');
+//
+//			// Add content to the new element
+//			p.innerText = 'This is brand new and made with js!';
+//
+//			// Insert the new node before the reference node
+//			gimmeH4.after(p);
+        
+        
+        
+    </script>
+</body>
+</html>
