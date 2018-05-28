@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>My To Do List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Just+Another+Hand|Nanum+Pen+Script" rel="stylesheet">
+</head>
+<style>
+    
+    h3{
+        text-align: center;
+    }
+    
+    .container{
+        margin-top: 5%;
+        margin-bottom: 10%;
+        width: 90%;
+    }
+    
+    .bar-add-item{
+        background: #CCCCCC;
+        display: flex;
+        padding: 5% 3%;
+        position: fixed;
+            bottom: 0;
+            left: 0;
+        width: 100%;
+    }
+    
+    .bar-add-item input{
+        border-radius: 20px;
+        border: none;
+        width: 80%;
+    }
+    
+    #buttonAdd{
+        font-size: 1.9em;
+        margin: auto;
+    }
+    
+    li{
+        list-style: none;
+    }
+    
+</style>
+<body>
+    
+    <div class="container">
+        <h3>Things to do:</h3>
+        <br>
+        <div id="contentAnchor"></div>
+    </div>
+     <div class="bar-add-item"><input type="text" id="myInput"><div id="buttonAdd"><i class="fas fa-plus-circle"></i></div>
+    </div> 
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script>
+    
+//      iife – commented out because it blocks inline JS
+        (function () {
+            
+            // MAIN DOM QUERIES
+            var addButton = document.getElementById('buttonAdd');
+            var anchor = document.getElementById('contentAnchor');
+            // END MAIN DOM QUERIES
+            
+            // Storage array for list items
+            var listItems = [];
+            
+            // Loop writing array content into html
+            function createList(){
+                for (var i = 0; i < listItems.length; i++){
+                    // Conditional so the code only adds new elements instead of exsisting ones
+                    if (i === (listItems.length - 1)){ // This equation makes sure it's only grabbing the last item in the array
+                        var li = document.createElement('li');
+                        // Below we create bootstrap input group and bin icon wrapped in a div with flex
+                        li.innerHTML = '<div class="input-group mb-3"><div class="input-group-prepend"><div class="input-group-text"><input type="checkbox" aria-label="Checkbox for following text input"></div></div><input type="text" class="form-control" aria-label="Text input with checkbox" value="' + listItems[i] +'" readonly>';
+                        anchor.before(li);
+                    }
+                }
+            }
+            
+            // Function storing user input into array;
+            function addListItem(){
+                var userInput = document.getElementById('myInput').value;
+                listItems.push(userInput);
+                }
+            
+            // EVENT LISTENERS
+            addButton.addEventListener('click',addListItem, false);
+            addButton.addEventListener('click',createList, false);
+            
+        })();
+        
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- END DOC -->
