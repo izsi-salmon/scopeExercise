@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>My To Do List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Just+Another+Hand|Nanum+Pen+Script" rel="stylesheet">
 </head>
@@ -18,6 +18,16 @@
         margin-top: 5%;
         margin-bottom: 10%;
         width: 90%;
+    }
+    
+    .main-content-flex{
+        display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+    }
+    
+    .input-group{
+        width: 85%;
     }
     
     .bar-add-item{
@@ -51,16 +61,15 @@
     <div class="container">
         <h3>Things to do:</h3>
         <br>
+<!--        <div class="main-content-flex"><div class="input-group mb-3"><div class="input-group-prepend"><div class="input-group-text"><input type="checkbox" aria-label="Checkbox for following text input"></div></div><input type="text" class="form-control" aria-label="Text input with checkbox" value="' + listItems[i] +'" readonly></div><i class="fas fa-trash-alt"></i></div>-->
         <div id="contentAnchor"></div>
     </div>
      <div class="bar-add-item"><input type="text" id="myInput"><div id="buttonAdd"><i class="fas fa-plus-circle"></i></div>
     </div> 
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
-    
-//      iife – commented out because it blocks inline JS
         (function () {
             
             // MAIN DOM QUERIES
@@ -78,17 +87,41 @@
                     if (i === (listItems.length - 1)){ // This equation makes sure it's only grabbing the last item in the array
                         var li = document.createElement('li');
                         // Below we create bootstrap input group and bin icon wrapped in a div with flex
-                        li.innerHTML = '<div class="input-group mb-3"><div class="input-group-prepend"><div class="input-group-text"><input type="checkbox" aria-label="Checkbox for following text input"></div></div><input type="text" class="form-control" aria-label="Text input with checkbox" value="' + listItems[i] +'" readonly>';
+                        li.innerHTML = '<div class="main-content-flex"><div class="input-group mb-3"><div class="input-group-prepend"><div class="input-group-text"><input type="checkbox" aria-label="Checkbox for following text input"></div></div><input type="text" class="form-control" aria-label="Text input with checkbox" value="' + listItems[i] +'" readonly></div><i class="fas fa-trash-alt""></i></div>';
                         anchor.before(li);
-                    }
-                }
-            }
+                        setDeleteBtn(i); // Using the counter as the arguments allows us to number the buttons
+                    } // END if
+                    
+                } // END for
+                
+            } // END createList()
             
             // Function storing user input into array;
             function addListItem(){
                 var userInput = document.getElementById('myInput').value;
                 listItems.push(userInput);
                 }
+            
+            // Function that grabs the delete button and adds an event listener to trigger the delete function
+            function setDeleteBtn(btnNo){ // by numbering the buttons we can target them one by one
+                var deleteBtn = document.getElementsByClassName('fa-trash-alt');
+                deleteBtn[btnNo].addEventListener('click', function(){initDeletion(btnNo);}, false);
+                console.log('Running setDeleteBtn() :' + deleteBtn);
+                // Because this function is run in a for loop using parameters, we have a one dynamic funcation
+                // that runs uniquely for each button
+            }
+        
+            function initDeletion(btnNo){
+                // Deletion of DOM content
+                var itemDiv = document.getElementsByClassName('main-content-flex');
+                var e = event.target.parentElement; // Targets the parent div of the selected(clicked) bin icon
+                e.remove();
+                // Deletion of array data
+                delete listItems[btnNo];
+                console.log('item: ' + btnNo + 'listitems after removal: ' + listItems);
+                console.dir(listItems);
+                
+            }
             
             // EVENT LISTENERS
             addButton.addEventListener('click',addListItem, false);
@@ -99,26 +132,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- END DOC -->
